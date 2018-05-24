@@ -1,11 +1,14 @@
 #BlueJ class context
-comment0.target=Board
-comment1.params=
-comment1.target=Board()
+comment0.params=
+comment0.target=Board()
+comment1.params=page
+comment1.target=void\ draw(java.awt.Graphics)
 comment2.params=page
-comment2.target=void\ draw(java.awt.Graphics)
+comment2.target=void\ drawGame(java.awt.Graphics)
 comment3.params=x\ y
 comment3.target=void\ act(int,\ int)
-comment4.params=
-comment4.target=void\ makeButtons()
-numComments=5
+comment4.params=x\ y
+comment4.target=void\ placeHit(int,\ int)
+comment5.params=x\ y
+comment5.target=void\ placeMiss(int,\ int)
+numComments=6
