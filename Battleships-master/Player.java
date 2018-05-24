@@ -17,6 +17,39 @@ public class Player{
         }
     }
     
+    public Ship getShip(int i){
+        return ships[i];
+    }
+
+    public boolean bombHit(int xInt, int y)
+    {
+        String x = Ship.convertIntX(xInt);
+        y = Ship.convertToGridY(y);
+        
+        for (int i = 0; i <ships.length; i++)
+        {
+            System.out.println("Ship at " + ships[i].getX() + ", " + ships[i].getY());
+            String storedX = ships[i].getX();
+            if(x.equals(ships[i].getX()) && y == ships[i].getY())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean inBounds(){
+        //doesnt work yet
+        for(int i = 0; i<ships.length; i++){
+            int x = ships[i].getXLoc();
+            int y = ships[i].getY();
+            if((x <= 20 || x>= 620) || (y <= 150 || y>= 750)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
     //draws ships
     public void draw( Graphics page ){
         //color defined using rgb values (0-255 each)
@@ -27,8 +60,10 @@ public class Player{
     }
     
     public void move(int x, int y){
-        System.out.println(clicked);
-        clicked.move(x,y);
+        if(!overlap(x, y))
+            clicked.move(x,y);
+        else
+            System.out.println("Nice one");
     }
     
     public void act(int x, int y){
@@ -39,10 +74,30 @@ public class Player{
             overlaps = ships[num].overlapsWith(x,y);
             num++;
         }
-        if(overlaps){
-            
-            clicked = ships[num];
+        if(overlaps)
+            clicked = ships[num-1];
+    }
+    
+    public void mapLocs(){
+        for(Ship next : ships){
+            next.setLoc();
         }
     }
-
+    
+    //NEED TO DO FOR ROTATED SHIP!!!!
+    public boolean overlap(int xLoc, int y){
+        y = Ship.convertToGridY(y);
+        String x = Ship.convertIntX(xLoc);
+        System.out.println("x " + x);
+        for(int i = 0; i < ships.length; i++){
+            String stored = Ship.convertIntX(ships[i].getXLoc());
+            System.out.println("Stored " + Ship.convertIntX(ships[i].getXLoc()));
+            for(int check = 0; check < ships[i].getLength(); check++){
+                stored = Ship.increment(stored);
+                if(x.equals(stored))
+                    return true;
+            }
+        }
+        return false;
+    }
 }
