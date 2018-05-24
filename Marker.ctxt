@@ -2,6 +2,10 @@
 comment0.target=Marker
 comment1.params=hit\ x\ y
 comment1.target=Marker(boolean,\ java.lang.String,\ int)
-comment2.params=page
-comment2.target=void\ draw(java.awt.Graphics)
-numComments=3
+comment2.params=hit\ x\ y
+comment2.target=Marker(boolean,\ int,\ int)
+comment3.params=
+comment3.target=void\ snapTo()
+comment4.params=page
+comment4.target=void\ draw(java.awt.Graphics)
+numComments=5

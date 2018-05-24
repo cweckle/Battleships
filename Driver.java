@@ -1,3 +1,5 @@
+//Last Changed 5/23/2018
+
 import javax.swing.*;
 import java.awt.*;
 public class Driver
@@ -9,14 +11,18 @@ public class Driver
     {
         //create a JFrame (window) that will be visible on screen
         JFrame frame = new JFrame( "Player 1" );
-        JFrame frame2 = new JFrame("Player 2");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //make the red close button work
         frame.setLocation( 0, 0 ); //place the frame in the upper left corner
-        frame2.setLocation(100,0);
         Game game = new Game(Driver.WIDTH, Driver.HEIGHT); //create a Game object with width = 1000, height = 800
         frame.getContentPane().add(game); //add game to the frame so it will be on the screen
         frame.pack();
         frame.setVisible(true);
+       
+        JButton button = new JButton("Click here when you are done placing ships");
+
+        frame.add(button);
+        frame.setVisible(true);
+        
         game.playGame();//call the playGame() method to intitiate the game
     }
 }

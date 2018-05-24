@@ -7,6 +7,7 @@ public class Game extends JPanel implements MouseListener,KeyListener
 {
     private Player player;
     private Board board;
+    private Computer computer;
     private boolean placed = false;
     private boolean selected = false;
 
@@ -21,9 +22,9 @@ public class Game extends JPanel implements MouseListener,KeyListener
         //initialize the instance variables
         player = new Player();  //change these numbers and see what happens
         board = new Board();
-        board.makeButtons();
-
+        computer = new Computer();
         this.addMouseListener(this);//allows the program to respond to key presses - Don't change
+        this.addKeyListener(this);
 
         this.setFocusable(true);//I'll tell you later - Don't change
     }
@@ -47,15 +48,16 @@ public class Game extends JPanel implements MouseListener,KeyListener
     public void paintComponent( Graphics page )
     {
         super.paintComponent( page );//I'll tell you later.
-        if(placed == false)
+        if(!placed)
         {
             board.draw(page);
             player.draw( page );//calls the draw method in the Player class
-            board.draw(page);
         }
         else
         {
-            //
+            
+            //computer.draw(page);
+            board.drawGame(page);
         }
     }
 
@@ -67,9 +69,10 @@ public class Game extends JPanel implements MouseListener,KeyListener
     // //tells the program what to do when keys are pressed
     public void keyPressed( KeyEvent event )
     {
-        if( event.getKeyCode() == KeyEvent.VK_LEFT )
+        if( event.getKeyCode() == KeyEvent.VK_RIGHT )
         {
-            //player.moveLeft();
+            placed = true;
+            player.mapLocs();
         }
     }
 
@@ -93,25 +96,23 @@ public class Game extends JPanel implements MouseListener,KeyListener
         int x = e.getX();
         int y = e.getY();
         System.out.println("Mouse Pressed at X: " + x + " - Y: " + y);
-        if(!selected){
-            if(y >= Board.TOP)
-                board.act(x,y);
-            else{
-                System.out.println("hello");
+        if(!placed){
+            if(!selected){
                 player.act(x,y);
+                selected = true;
             }
-            selected = true;
+            else{
+                player.move(x, y);
+                selected = false;
+            }
         }
         else{
-            player.move(x, y);
-            selected = false;
-        }
-        
-        
-        if((this.bombHit(x, y) == true)) //not sure if this is supposed to be this. We need to drop a bomb, and that bomb is what needs to call bombHit i think
-        {
-            //snap2 method to turn x into a string and call it stringx
-            board.placeHit(stringx, y);
+            if((computer.bombHit(x, y) == true)) //not sure if this is supposed to be this. We need to drop a bomb, and that bomb is what needs to call bombHit i think
+            {
+                board.placeHit(x,y);
+            }
+            else
+                board.placeMiss(x,y);
         }
     }
 
