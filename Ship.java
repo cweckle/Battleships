@@ -34,13 +34,6 @@ public class Ship{
     public Ship(){
     }
     
-    public int getLength(){
-        return length;
-    }
-    
-    public int getXLoc(){
-        return xLoc;
-    }
     
     public void setX(int x){
         xLoc = x;
@@ -72,6 +65,10 @@ public class Ship{
         yLoc = y;
     }
     
+    public int getLength(){
+        return this.length;
+    }
+    
     public void draw( Graphics page ){
         if(yLoc >= Board.TOP)
             snapTo();
@@ -87,6 +84,16 @@ public class Ship{
         for(int i = 0; i < length; i ++)
             page.fillOval(this.xLoc + (60*i) + 20, this.yLoc + 10, 7, 7);
     }
+    
+    public void drawMini(Graphics page){
+        snapTo();
+        page.setColor(new Color(100,100,100));
+        page.fillRect(this.xLoc, this.yLoc, 60*length -20, 30);
+        page.setColor( new Color( 255, 255, 255 ) );
+        for(int i = 0; i < length; i ++)
+            page.fillOval(this.xLoc + (60*i) + 20, this.yLoc + 10, 7, 7);
+    }
+    
     
     public void snapTo(){
         String col = convertIntX(xLoc);
