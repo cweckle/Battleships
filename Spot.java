@@ -6,9 +6,9 @@ import java.awt.event.*;
 public class Spot extends JButton implements MouseListener
 {
     private int row;
-    private int column;
+    private String column;
 
-    public Spot(int r, int c)
+    public Spot(int r, String c)
     {
         row = r;
         column = c;
@@ -20,7 +20,7 @@ public class Spot extends JButton implements MouseListener
         return row;
     }
 
-    public int getCol()
+    public String getCol()
     {
         return column;
     }
@@ -34,48 +34,59 @@ public class Spot extends JButton implements MouseListener
         }
         return answer;
     }
-
-    public Spot getRight()
+    
+    public boolean equals(Spot compare)
     {
-        return new Spot(row, column + 1);
+        if(this.getRow() == compare.getRow() && this.getCol().equals(compare.getCol()))
+        {
+            return true;
+        }
+        return false;
     }
 
-    public Spot getLeft()
-    {
-        return new Spot(row, column - 1);
-    }
+    //public Spot getRight()
+    //{
+       // return new Spot(row, column + 1);
+    //}
 
-    public Spot getUp()
-    {
-        return new Spot(row - 1, column);
-    }
+    //public Spot getLeft()
+    //{
+        //return new Spot(row, column - 1);
+    //}
 
-    public Spot getDown()
-    {
-        return new Spot(row + 1, column);
-    }
+    //public Spot getUp()
+    //{
+        //return new Spot(row - 1, column);
+    //}
+
+    //public Spot getDown()
+    //{
+       // return new Spot(row + 1, column);
+    //}
 
     public ArrayList<Spot> getAdjacentSpots()
     {
         ArrayList<Spot> answer = new ArrayList<Spot>();
-        answer.add(getRight());
-        answer.add(getLeft());
-        answer.add(getUp());
-        answer.add(getDown());
+        //answer.add(getRight());
+        //answer.add(getLeft());
+        //answer.add(getUp());
+        //answer.add(getDown());
         return answer;
     }
 
     public boolean inBounds(int height, int width)
     {
-        return (row >= 0 && row < height && column >= 0 && column < width);
+        //return (row >= 0 && row < height && column >= 0 && column < width);
+        return true;
     }
 
     public int compareTo(Object other)
     {
-        Spot test = (Spot)other;
-        if(test.row == row)
-            return -(column - test.column);
-        return row - test.row;
+        //Spot test = (Spot)other;
+        //if(test.row == row)
+            //return -(column - test.column);
+        //return row - test.row;
+        return 0;
     }
 
     public boolean equals(Object other)

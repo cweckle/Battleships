@@ -4,12 +4,15 @@ import javax.swing.*;
 import java.awt.event.*;
 
 public class Computer extends Player{
-     private ArrayList<Marker> computerMarkers = new ArrayList<Marker>();
+    private ArrayList<Marker> computerMarkers = new ArrayList<Marker>();
+    private String lastXSpot = "";
+    private int lastYSpot = -10;
+
     public Computer(){
         super();
         randomize();
     }
-    
+
     public void randomize(){
         for(int i = 0; i < Player.NUMSHIPS; i ++){
             getShip(i).setX((int)(Math.random()*(Board.NUM_ROWS*Board.SIDE))+Board.LEFT);
@@ -17,46 +20,72 @@ public class Computer extends Player{
             getShip(i).snapTo();
         }
     }
-    
+
     public void placeHit(String x, int y)
     {
         computerMarkers.add(new Marker(true, x,y));
     }
-    
+
     public void guess()
     {
-        //should have a varibale if it has hit something
-        //if the boolean is false, then you make random, but intelligent guessed
-        //if the boolean is true, and you haven't sunk the entire boat, you should be guessing to find this ship
-        //if the boolean is true, but you've sunk the entire ship, you should go back to guessing randomly but intelligently
+        //check if the guessed place has hit something
         boolean haveHit = false;
         boolean sunkThisShip = false;
-        while (haveHit == false)
+        while (haveHit == false || sunkThisShip == true)
         {
-            placeHit(Ship.convertIntX((int)(Math.random()* 600+20)),Ship.convertToGridY((int)(Math.random()*600+150))); //this isn't intelligent
-            //do i need to check if this spot has already had a bomb dropped on it?
-            //check if that has hit something
+            boolean drop = false;
+            String xSpot = "";
+            int ySpot = 0;
+            ArrayList <Spot> hitSpots = new ArrayList<Spot>();
+            if(lastXSpot.equals("") && lastYSpot == -10)
+            {
+                while (!drop)
+                {
+                    xSpot = Ship.convertIntX((int)(Math.random()* 600+20));
+                    ySpot = Ship.convertToGridY((int)(Math.random()*600+150));
+                    placeHit(xSpot,ySpot);
+                }
+            }
+            else
+            { 
+                while (!drop)
+                {
+                    int round = 0;
+                    for (int i = round; i <10; i+=4) //col x
+                    {
+                        for(int r = round; r <10; r+= 4) //row y
+                        {
+                            xSpot =  Ship.convertIntX(i);
+                            ySpot = r;
+                            placeHit(xSpot,ySpot);
+                        }
+                        round ++;
+                    }
+                }
+            }
+            for(int i = 0; i < hitSpots.size(); i++)
+            {
+                if(hitSpots.get(i).equals(new Spot(ySpot, xSpot)))
+                {
+                    i = hitSpots.size();
+                }
+                else
+                {
+                    hitSpots.add(new Spot(ySpot, xSpot));
+                    lastXSpot = xSpot;
+                    lastYSpot = ySpot;
+                    drop = true;
+                    //check to see what happens when you drop the bomb here
+                    //and check to see if haveHit will be true
+                    //something needs to call this method guess
+                }
+            }
         }
         while(haveHit == true && sunkThisShip == false)
         {
             
-        }
-        while(haveHit == true && sunkThisShip == true)
-        { 
-            placeHit(Ship.convertIntX((int)(Math.random()* 600+20)),Ship.convertToGridY((int)(Math.random()*600+150))); //this isn't intelligent
-        }
-    }
-    
-    public void guess(int x, int y, boolean hit, boolean sink)
-    { 
-        boolean haveHit = hit;
-        boolean sunkThisShip = sink;
-        while(haveHit == true && sunkThisShip == false)
-        {
-            placeHit(Ship.convertIntX(x-60), y); //so how do we do this becuase if one doesnt work it needs to do the next, etc.
-            placeHit(Ship.convertIntX(x-60), y);
-            placeHit(Ship.convertIntX(x), y+60); //this also changes if we know the direction of the boat
-            placeHit(Ship.convertIntX(x), y-60);
+            //check direction of the ship, and if you have hit multiple places in the ship
+            //need to check if you have sunk the entire ship
         }
     }
 }

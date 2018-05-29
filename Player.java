@@ -39,8 +39,15 @@ public class Player{
     }
     
     public boolean inBounds(){
-        //CHECK TO SEE IF PLACED SHIPS ARE INBOUNDS FOR BOTH PLAYER AND COMPUTER
-        return false;
+        //doesnt work yet
+        for(int i = 0; i<ships.length; i++){
+            int x = ships[i].getXLoc();
+            int y = ships[i].getY();
+            if((x <= 20 || x>= 620) || (y <= 150 || y>= 750)){
+                return false;
+            }
+        }
+        return true;
     }
     
     //draws ships
@@ -52,8 +59,18 @@ public class Player{
         }
     }
     
+        public void drawMini(Graphics page){
+        for(int i = 0; i < ships.length; i ++){
+            page.setColor( new Color( 100, 100, 100 ) );
+            ships[i].drawMini(page);
+        }
+    }
+    
     public void move(int x, int y){
-        clicked.move(x,y);
+        if(!overlap(x, y))
+            clicked.move(x,y);
+        else
+            System.out.println("Nice one");
     }
     
     public void act(int x, int y){
@@ -72,5 +89,22 @@ public class Player{
         for(Ship next : ships){
             next.setLoc();
         }
+    }
+    
+    //NEED TO DO FOR ROTATED SHIP!!!!
+    public boolean overlap(int xLoc, int y){
+        y = Ship.convertToGridY(y);
+        String x = Ship.convertIntX(xLoc);
+        System.out.println("x " + x);
+        for(int i = 0; i < ships.length; i++){
+            String stored = Ship.convertIntX(ships[i].getXLoc());
+            System.out.println("Stored " + Ship.convertIntX(ships[i].getXLoc()));
+            for(int check = 0; check < ships[i].getLength(); check++){
+                stored = Ship.increment(stored);
+                if(x.equals(stored))
+                    return true;
+            }
+        }
+        return false;
     }
 }

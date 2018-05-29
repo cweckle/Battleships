@@ -58,6 +58,7 @@ public class Game extends JPanel implements MouseListener,KeyListener
             
             //computer.draw(page);
             board.drawGame(page);
+                        player.drawMini(page);
         }
     }
 
