@@ -1,12 +1,13 @@
 #BlueJ class context
-comment0.params=
-comment0.target=Computer()
+comment0.target=Computer
 comment1.params=
-comment1.target=void\ randomize()
-comment2.params=x\ y
-comment2.target=void\ placeHit(java.lang.String,\ int)
-comment3.params=
-comment3.target=void\ guess()
-comment4.params=x\ y\ hit\ sink
-comment4.target=void\ guess(int,\ int,\ boolean,\ boolean)
-numComments=5
+comment1.target=Computer()
+comment2.params=
+comment2.target=void\ randomize()
+comment3.params=x\ y
+comment3.target=void\ placeHit(java.lang.String,\ int)
+comment4.params=
+comment4.target=void\ guess()
+comment5.params=x\ y\ hit\ sink
+comment5.target=void\ guess(int,\ int,\ boolean,\ boolean)
+numComments=6

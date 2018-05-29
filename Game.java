@@ -3,13 +3,14 @@ import java.util.*;
 import javax.swing.*;
 import java.awt.event.*;
 
-public class Game extends JPanel implements MouseListener,KeyListener
+public class Game extends JPanel implements MouseListener,ActionListener
 {
     private Player player;
     private Board board;
     private Computer computer;
     private boolean placed = false;
     private boolean selected = false;
+    private JButton button;
 
     //constructor - sets the initial conditions for this Game object
     public Game(int width, int height)
@@ -24,7 +25,15 @@ public class Game extends JPanel implements MouseListener,KeyListener
         board = new Board();
         computer = new Computer();
         this.addMouseListener(this);//allows the program to respond to key presses - Don't change
-        this.addKeyListener(this);
+        
+        String text = "DONE PLACING YOUR SHIPS?";
+        System.out.println(text);
+        
+        button = new JButton(text);
+        button.setBounds(700,500,200,50);
+        this.add(button);
+        button.setVisible(true);
+        button.addActionListener(this);
 
         this.setFocusable(true);//I'll tell you later - Don't change
     }
@@ -55,31 +64,10 @@ public class Game extends JPanel implements MouseListener,KeyListener
         }
         else
         {
-            
-            //computer.draw(page);
+            board.drawMini(page);
             board.drawGame(page);
-                        player.drawMini(page);
+            player.drawMini(page);
         }
-    }
-
-    //not used but must be present
-    public void keyReleased( KeyEvent event )
-    {  
-    }
-
-    // //tells the program what to do when keys are pressed
-    public void keyPressed( KeyEvent event )
-    {
-        if( event.getKeyCode() == KeyEvent.VK_RIGHT )
-        {
-            placed = true;
-            player.mapLocs();
-        }
-    }
-
-    //not used but must be present
-    public void keyTyped( KeyEvent event )
-    {
     }
 
     public void mouseClicked(MouseEvent e) {
@@ -120,5 +108,10 @@ public class Game extends JPanel implements MouseListener,KeyListener
     public void mouseReleased(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
+    }
+    
+    public void actionPerformed(ActionEvent event){
+        placed = true;
+        button.setVisible(false);
     }
 }

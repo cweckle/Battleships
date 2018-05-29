@@ -1,8 +1,7 @@
 #BlueJ class context
-comment0.params=l
-comment0.target=Ship(int)
-comment1.params=
-comment1.target=Ship()
+comment0.target=Ship
+comment1.params=l
+comment1.target=Ship(int)
 comment10.params=x\ y
 comment10.target=void\ move(int,\ int)
 comment11.params=page
@@ -22,11 +21,11 @@ comment17.target=java.lang.String\ increment(java.lang.String)
 comment18.params=
 comment18.target=void\ setLoc()
 comment2.params=
-comment2.target=int\ getLength()
+comment2.target=Ship()
 comment3.params=
-comment3.target=int\ getXLoc()
+comment3.target=int\ getLength()
 comment4.params=
-comment4.target=int\ getYLoc()
+comment4.target=int\ getXLoc()
 comment5.params=x
 comment5.target=void\ setX(int)
 comment6.params=y
