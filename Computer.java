@@ -7,36 +7,38 @@ public class Computer extends Player{
     private ArrayList<Marker> computerMarkers = new ArrayList<Marker>();
     private String lastXSpot = "";
     private int lastYSpot = -10;
-    
+
     public Computer(){
         super();
         randomize();
     }
-    
+
     public void randomize(){
         for(int i = 0; i < Player.NUMSHIPS; i ++){
-            getShip(i).setX((int)(Math.random()*(Board.NUM_ROWS*Board.SIDE))+Board.LEFT);
+            getShip(i).setX((int)(Math.random()*(getShip(i).getLength()*Board.SIDE))+Board.LEFT);
             getShip(i).setY((int)(Math.random()*(Board.NUM_COLS*Board.SIDE))+Board.TOP);
             getShip(i).snapTo();
         }
     }
-    
-        public void placeHit(String x, int y)
+
+    public void placeHit(String x, int y)
     {
         computerMarkers.add(new Marker(true, x,y));
     }
-    
+
     public void guess()
     {
         //check if the guessed place has hit something
         boolean haveHit = false;
         boolean sunkThisShip = false;
+        ArrayList <Spot> hitSpots = new ArrayList<Spot>();
         while (haveHit == false || sunkThisShip == true)
         {
             boolean drop = false;
             String xSpot = "";
             int ySpot = 0;
-            ArrayList <Spot> hitSpots = new ArrayList<Spot>();
+
+
             if(lastXSpot.equals("") && lastYSpot == -10)
             {
                 while (!drop)
@@ -75,6 +77,10 @@ public class Computer extends Player{
                     lastXSpot = xSpot;
                     lastYSpot = ySpot;
                     drop = true;
+                    if(overlap(Ship.getColVal(xSpot), ySpot) == true)
+                    {
+                        haveHit = true;
+                    }
                     //check to see what happens when you drop the bomb here
                     //and check to see if haveHit will be true
                     //something needs to call this method guess
@@ -83,8 +89,51 @@ public class Computer extends Player{
         }
         while(haveHit == true && sunkThisShip == false)
         {
-            
-            //check direction of the ship, and if you have hit multiple places in the ship
+            int xValue = 0;
+            int direction = 1;
+            if(direction == 1)
+            {
+                xValue = Ship.getColVal(lastXSpot) + 60;
+                placeHit(Ship.convertIntX(xValue), lastYSpot);
+                if(overlap(xValue,lastYSpot) == false)
+                {
+                    direction = -1;
+                    //check if entire ship has sunk
+                    //check if the entire ship has sunk
+                }
+            }
+            else if (direction == -1)
+            {
+                xValue = Ship.getColVal(lastXSpot) - 60;
+                placeHit(Ship.convertIntX(xValue), lastYSpot);
+                if(overlap(xValue,lastYSpot) == false)
+                {
+                    direction = 1;
+                    //check if this place has already been bombed
+                    //check if entire ship has sunk
+                }
+            }
+            for(int i = 0; i < hitSpots.size(); i++)
+            {
+                if(hitSpots.get(i).equals(new Spot(lastYSpot, Ship.convertIntX(xValue))))
+                {
+                    i = hitSpots.size();
+                }
+                else
+                {
+                    hitSpots.add(new Spot(lastYSpot, Ship.convertIntX(xValue)));
+                    lastXSpot = Ship.convertIntX(xValue);
+                    //drop = true;
+                    if(overlap(xValue, lastYSpot) == true)
+                    {
+                        haveHit = true;
+                    }
+                    //check to see what happens when you drop the bomb here
+                    //and check to see if haveHit will be true
+                    //something needs to call this method guess
+                }
+            }
+
             //need to check if you have sunk the entire ship
         }
     }

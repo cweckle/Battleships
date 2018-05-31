@@ -24,21 +24,13 @@ public class Player{
     public boolean bombHit(int xInt, int y)
     {
         String x = Ship.convertIntX(xInt);
-        y = Ship.convertToGridY(y);
-
-        for (int i = 0; i <ships.length; i++)
-        {
-            System.out.println("Ship at " + ships[i].getX() + ", " + ships[i].getY());
-            String storedX = ships[i].getX();
-            try{
-                if(x.equals(ships[i].getX()) && y == ships[i].getY())
-                {
-                    return true;
-                }
-            }catch(NullPointerException e){System.out.println("no");}
-        }
+        //y = Ship.convertToGridY(y);
+        if(overlap(xInt,y))
+            return true;
         return false;
+
     }
+    
 
     public boolean inBounds(){
         //doesnt work yet
@@ -70,11 +62,13 @@ public class Player{
         }
     }
 
-    public void move(int x, int y){
-        //if(!overlap(x, y))
-        clicked.move(x,y);
-        //else
-        //System.out.println("Nice one");
+    public boolean move(int x, int y){
+        if(!overlap(x, y)){
+            clicked.move(x,y);
+            return false;
+        }
+        return true;
+        
     }
 
     public void act(int x, int y){
@@ -108,9 +102,9 @@ public class Player{
             System.out.println("yloc " + ships[i].getY());
             if(y == storedY){
                 for(int check = 0; check < ships[i].getLength(); check++){
-                    storedX = Ship.increment(storedX);
                     if(x.equals(storedX))
                         return true;
+                    storedX = Ship.increment(storedX);
                 } 
             }
         }
