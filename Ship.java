@@ -98,6 +98,7 @@ public class Ship{
         page.setColor(new Color(100,100,100));
         int miniX = getColVal(gridX);
         int miniY = gridY; 
+        System.out.println(miniX + ", " + miniY);
         page.fillRect(Board.MINI_LEFT + miniX * Board.MINI_SIDE + 5, Board.MINI_TOP + miniY * Board.MINI_SIDE + 5, Board.MINI_SIDE*length-6, 10);
         page.setColor( new Color( 255, 255, 255 ) );
         for(int i = 0; i < length; i ++)

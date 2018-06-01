@@ -13,6 +13,7 @@ public class Player{
         clicked = new Ship();
         for(int i = 0; i < ships.length; i ++){
             ships[i] = new Ship(i+1); 
+            System.out.println(ships[i]);
         }
     }
 
@@ -28,18 +29,6 @@ public class Player{
             return true;
         return false;
 
-        // for (int i = 0; i <ships.length; i++)
-        // {
-            // System.out.println("Ship at " + ships[i].getX() + ", " + ships[i].getY());
-            // String storedX = ships[i].getX();
-            // try{
-                // if(x.equals(ships[i].getX()) && y == ships[i].getY())
-                // {
-                    // return true;
-                // }
-            // }catch(NullPointerException e){System.out.println("no");}
-        // }
-        // return false;
     }
     
 
@@ -104,9 +93,13 @@ public class Player{
     public boolean overlap(int xLoc, int y){
         y = Ship.convertToGridY(y);
         String x = Ship.convertIntX(xLoc);
+        System.out.println("x " + x);
         for(int i = 0; i < ships.length; i++){
             String storedX = Ship.convertIntX(ships[i].getXLoc());
+            System.out.println("StoredX " + storedX);
             int storedY = Ship.convertToGridY(ships[i].getYLoc());
+            System.out.println("StoredY " + storedY);
+            System.out.println("yloc " + ships[i].getY());
             if(y == storedY){
                 for(int check = 0; check < ships[i].getLength(); check++){
                     if(x.equals(storedX))
